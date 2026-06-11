@@ -12,6 +12,7 @@ import com.michaelliu.flightfx.R
 import com.michaelliu.flightfx.databinding.FragmentFlightBinding
 import com.michaelliu.flightfx.domain.model.Flight
 import com.michaelliu.flightfx.ui.common.BaseFragment
+import com.michaelliu.flightfx.ui.common.SpacingItemDecoration
 import com.michaelliu.flightfx.ui.common.UiState
 import com.michaelliu.flightfx.ui.common.messageRes
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,7 @@ class FlightFragment : BaseFragment<FragmentFlightBinding>() {
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         binding.flightList.adapter = adapter
+        binding.flightList.addItemDecoration(SpacingItemDecoration(requireContext())) // 直向單欄 / 橫向 2 欄均分間距
         binding.swipeRefresh.setOnRefreshListener { viewModel.refresh() }
         binding.retryButton.setOnClickListener {
             binding.errorView.isVisible = false

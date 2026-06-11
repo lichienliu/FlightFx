@@ -39,6 +39,10 @@ class CurrencyViewModel @Inject constructor(
     // = 或切基準帶入後為 true:下一鍵打數字蓋掉重來、接運算子則沿用目前結果
     private var replaceOnInput = false
 
+    // 計算機是否開啟。撐過旋轉:直向 BottomSheet / 橫向側欄各自據此還原呈現
+    private val _isCalculatorOpen = MutableStateFlow(false)
+    val isCalculatorOpen: StateFlow<Boolean> = _isCalculatorOpen
+
     // 匯率抓一次(repository 快取),與基準幣、輸入金額合併 → 切基準/輸入只重算不重打
     val uiState: StateFlow<UiState<List<CurrencyRow>>> =
         combine(
@@ -78,6 +82,14 @@ class CurrencyViewModel @Inject constructor(
 
     fun retry() {
         refreshTrigger.tryEmit(Unit)
+    }
+
+    fun openCalculator() {
+        _isCalculatorOpen.value = true
+    }
+
+    fun closeCalculator() {
+        _isCalculatorOpen.value = false
     }
 
     // 數字鍵:單段最多 12 位、全式最多 24 字,超限忽略;段首「0」被新數字取代(避免 07)

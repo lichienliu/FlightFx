@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 橫向:壓縮 display 與間距、縮小按鍵字級,讓矮螢幕下鍵盤放得下且文字不被裁切 -->
+    <dimen name="calc_pad_top">4dp</dimen>
+    <dimen name="calc_pad_bottom">8dp</dimen>
+    <dimen name="calc_section_gap">6dp</dimen>
+    <dimen name="calc_display_min_height">44dp</dimen>
+    <dimen name="calc_display_text_max">32sp</dimen>
+    <dimen name="calc_key_margin">3dp</dimen>
+    <dimen name="calc_key_text_size">18sp</dimen>
+</resources>

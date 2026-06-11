@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="16dp">
+    android:paddingTop="@dimen/calc_pad_top"
+    android:paddingBottom="@dimen/calc_pad_bottom">
 
     <LinearLayout
+        android:id="@+id/calc_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -34,14 +35,14 @@
         android:id="@+id/display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/calc_section_gap"
         android:background="@drawable/bg_display"
         android:gravity="end|center_vertical"
         android:maxLines="1"
-        android:minHeight="56dp"
+        android:minHeight="@dimen/calc_display_min_height"
         android:paddingHorizontal="20dp"
         android:textColor="?attr/colorOnSurface"
-        app:autoSizeMaxTextSize="40sp"
+        app:autoSizeMaxTextSize="@dimen/calc_display_text_max"
         app:autoSizeMinTextSize="20sp"
         app:autoSizeTextType="uniform"
         tools:text="100" />
@@ -49,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/calc_section_gap"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -64,7 +65,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Accent"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="AC" />
 
@@ -73,7 +74,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Operator"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:contentDescription="@string/calc_backspace"
                 app:icon="@drawable/ic_backspace_24"
@@ -86,7 +87,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Operator"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="÷" />
 
@@ -95,7 +96,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Operator"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="×" />
         </LinearLayout>
@@ -111,7 +112,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="7" />
 
@@ -120,7 +121,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="8" />
 
@@ -129,7 +130,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="9" />
 
@@ -138,7 +139,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Operator"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="−" />
         </LinearLayout>
@@ -154,7 +155,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="4" />
 
@@ -163,7 +164,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="5" />
 
@@ -172,7 +173,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="6" />
 
@@ -181,7 +182,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Operator"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="+" />
         </LinearLayout>
@@ -197,7 +198,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="1" />
 
@@ -206,7 +207,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="2" />
 
@@ -215,7 +216,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="3" />
 
@@ -224,7 +225,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Equals"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:contentDescription="@string/calc_equals"
                 android:text="=" />
@@ -241,7 +242,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="2"
                 android:text="0" />
 
@@ -250,7 +251,7 @@
                 style="@style/Widget.Flightfx.CalcKey"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:text="." />
 
@@ -259,7 +260,7 @@
                 style="@style/Widget.Flightfx.CalcKey.Operator"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/calc_key_margin"
                 android:layout_weight="1"
                 android:contentDescription="@string/calc_collapse"
                 app:icon="@drawable/ic_chevron_down_24"
