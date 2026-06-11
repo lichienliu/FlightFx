@@ -1,8 +1,40 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.Flightfx" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- 主色:品牌藍 -->
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/brand_blue_container</item>
+        <item name="colorOnPrimaryContainer">@color/brand_blue</item>
+
+        <!-- 次要/第三色:收斂成同一藍家族,容器沿用品牌淺藍(分頁膠囊、TonalButton 因此變藍而非預設紫) -->
+        <item name="colorSecondary">@color/md_secondary</item>
+        <item name="colorOnSecondary">@color/md_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/brand_blue_container</item>
+        <item name="colorOnSecondaryContainer">@color/brand_blue</item>
+        <item name="colorTertiary">@color/md_secondary</item>
+        <item name="colorOnTertiary">@color/md_on_secondary</item>
+        <item name="colorTertiaryContainer">@color/brand_blue_container</item>
+        <item name="colorOnTertiaryContainer">@color/brand_blue</item>
+
+        <!-- 中性面:零彩度灰,消除預設紫(計算機鍵、顯示框、BottomSheet、卡片底都吃這層) -->
+        <item name="android:colorBackground">@color/md_background</item>
+        <item name="colorOnBackground">@color/md_on_background</item>
+        <item name="colorSurface">@color/md_surface</item>
+        <item name="colorOnSurface">@color/md_on_surface</item>
+        <item name="colorSurfaceVariant">@color/md_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/md_on_surface_variant</item>
+        <item name="colorOutline">@color/md_outline</item>
+        <item name="colorOutlineVariant">@color/md_outline_variant</item>
+        <item name="colorSurfaceDim">@color/md_surface_dim</item>
+        <item name="colorSurfaceBright">@color/md_surface_bright</item>
+        <item name="colorSurfaceContainerLowest">@color/md_surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/md_surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/md_surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/md_surface_container_highest</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="Theme.Flightfx" parent="Base.Theme.Flightfx" />

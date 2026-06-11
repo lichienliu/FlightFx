@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 暗色覆寫(名稱同 values/colors.xml) -->
+    <color name="brand_blue">#FF4B79FF</color>
+    <color name="brand_blue_container">#FF202A47</color>
+
+    <color name="status_positive">#FF46C07D</color>
+    <color name="status_warning">#FFF2B43E</color>
+    <color name="status_negative">#FFF26D82</color>
+
+    <!-- M3 角色補齊(深色):藍家族 + 零彩度深灰中性面 -->
+    <color name="md_secondary">#FFB4C5EA</color>
+    <color name="md_on_secondary">#FF1E2D49</color>
+
+    <color name="md_background">#FF131416</color>
+    <color name="md_on_background">#FFE3E2E6</color>
+    <color name="md_surface">#FF131416</color>
+    <color name="md_on_surface">#FFE3E2E6</color>
+    <color name="md_surface_variant">#FF43474E</color>
+    <color name="md_on_surface_variant">#FFC3C6CD</color>
+    <color name="md_outline">#FF8D9099</color>
+    <color name="md_outline_variant">#FF43474E</color>
+
+    <color name="md_surface_dim">#FF131416</color>
+    <color name="md_surface_bright">#FF3A3B3E</color>
+    <color name="md_surface_container_lowest">#FF0E0F11</color>
+    <color name="md_surface_container_low">#FF1A1B1E</color>
+    <color name="md_surface_container">#FF1E1F22</color>
+    <color name="md_surface_container_high">#FF282A2D</color>
+    <color name="md_surface_container_highest">#FF333538</color>
+</resources>

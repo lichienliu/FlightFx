@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
+    <!-- 品牌藍 -->
+    <color name="brand_blue">#FF2F5BE5</color>
+    <color name="brand_blue_container">#FFE7EEFD</color>
+
+    <!-- 航班狀態語意色 -->
+    <color name="status_positive">#FF2EA15D</color>
+    <color name="status_warning">#FFE0941E</color>
+    <color name="status_negative">#FFE15068</color>
+
+    <!-- M3 角色補齊(淺色):次要/第三色收斂成藍家族,中性面為零彩度灰,避免吃到預設紫 -->
+    <color name="md_secondary">#FF4A5A87</color>
+    <color name="md_on_secondary">#FFFFFFFF</color>
+
+    <color name="md_background">#FFFFFFFF</color>
+    <color name="md_on_background">#FF1A1C1E</color>
+    <color name="md_surface">#FFFCFCFD</color>
+    <color name="md_on_surface">#FF1A1C1E</color>
+    <color name="md_surface_variant">#FFE2E4E8</color>
+    <color name="md_on_surface_variant">#FF44474B</color>
+    <color name="md_outline">#FF74777C</color>
+    <color name="md_outline_variant">#FFC5C7CC</color>
+
+    <color name="md_surface_dim">#FFDDDEE2</color>
+    <color name="md_surface_bright">#FFFFFFFF</color>
+    <color name="md_surface_container_lowest">#FFFFFFFF</color>
+    <color name="md_surface_container_low">#FFF6F7F9</color>
+    <color name="md_surface_container">#FFF0F2F4</color>
+    <color name="md_surface_container_high">#FFEBEDEF</color>
+    <color name="md_surface_container_highest">#FFE5E7EA</color>
 </resources>
