@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,9 +12,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.michaelliu.flightfx.R
 import com.michaelliu.flightfx.databinding.FragmentFlightBinding
 import com.michaelliu.flightfx.domain.model.Flight
+import com.michaelliu.flightfx.ui.MainViewModel
 import com.michaelliu.flightfx.ui.common.BaseFragment
 import com.michaelliu.flightfx.ui.common.SpacingItemDecoration
 import com.michaelliu.flightfx.ui.common.UiState
+import com.michaelliu.flightfx.ui.common.iconRes
 import com.michaelliu.flightfx.ui.common.messageRes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,6 +28,7 @@ import java.time.format.DateTimeFormatter
 class FlightFragment : BaseFragment<FragmentFlightBinding>() {
 
     private val viewModel: FlightViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val adapter = FlightAdapter()
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
 
@@ -46,6 +50,8 @@ class FlightFragment : BaseFragment<FragmentFlightBinding>() {
                 launch { viewModel.uiState.collect(::render) }
                 launch { viewModel.isRefreshing.collect { binding.swipeRefresh.isRefreshing = it } }
                 launch { viewModel.lastUpdated.collect(::renderLastUpdated) }
+                // 離線藏重試鈕:連線恢復會自動重抓,離線按了也只會再失敗
+                launch { mainViewModel.isOnline.collect { binding.retryButton.isVisible = it } }
             }
         }
     }
@@ -55,7 +61,10 @@ class FlightFragment : BaseFragment<FragmentFlightBinding>() {
         binding.swipeRefresh.isVisible = state is UiState.Content
         binding.emptyView.isVisible = state is UiState.Empty
         binding.errorView.isVisible = state is UiState.Error
-        if (state is UiState.Error) binding.errorMessage.setText(state.error.messageRes())
+        if (state is UiState.Error) {
+            binding.errorMessage.setText(state.error.messageRes())
+            binding.errorIcon.setImageResource(state.error.iconRes())
+        }
         if (state is UiState.Loading) binding.shimmer.startShimmer() else binding.shimmer.stopShimmer()
         if (state is UiState.Content) adapter.submitList(state.data)
     }

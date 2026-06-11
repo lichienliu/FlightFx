@@ -8,15 +8,19 @@ import com.michaelliu.flightfx.domain.repository.CurrencyRepository
 import com.michaelliu.flightfx.domain.usecase.CurrencyConverter
 import com.michaelliu.flightfx.domain.usecase.ExpressionEvaluator
 import com.michaelliu.flightfx.ui.common.UiState
+import com.michaelliu.flightfx.util.NetworkMonitor
 import com.michaelliu.flightfx.util.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -28,6 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CurrencyViewModel @Inject constructor(
     repository: CurrencyRepository,
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
     private val refreshTrigger = MutableSharedFlow<Unit>(replay = 1).apply { tryEmit(Unit) }
@@ -68,6 +73,20 @@ class CurrencyViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
             CalculatorUiState(Currency.DEFAULT, "0"),
         )
+
+    init {
+        // 匯率不輪詢,啟動時離線會停在錯誤頁;連線恢復且仍在錯誤頁時自動重試
+        // 剛恢復的瞬間路由/DNS 未必就緒,單發會落空 → 間隔補發,成功或重試用盡即停
+        viewModelScope.launch {
+            networkMonitor.isOnline.filter { it }.collect {
+                repeat(RECONNECT_RETRIES) {
+                    if (uiState.value !is UiState.Error) return@collect
+                    retry()
+                    delay(RECONNECT_RETRY_DELAY_MS)
+                }
+            }
+        }
+    }
 
     fun selectBase(currency: Currency) {
         val previous = baseCurrency.value
@@ -164,6 +183,8 @@ class CurrencyViewModel @Inject constructor(
     private companion object {
         const val DEFAULT_AMOUNT = 1.0
         const val STOP_TIMEOUT_MS = 5_000L
+        const val RECONNECT_RETRIES = 3
+        const val RECONNECT_RETRY_DELAY_MS = 5_000L
         const val MAX_SEGMENT_DIGITS = 12
         const val MAX_EXPRESSION_LENGTH = 24
         val RESULT_FORMAT = DecimalFormat("0.##########", DecimalFormatSymbols(Locale.US))
