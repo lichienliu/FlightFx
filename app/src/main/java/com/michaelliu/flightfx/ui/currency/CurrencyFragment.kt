@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.michaelliu.flightfx.databinding.FragmentCurrencyBinding
@@ -32,18 +32,21 @@ class CurrencyFragment : BaseFragment<FragmentCurrencyBinding>() {
 
     private var defaultListPaddingBottom = 0
 
+    // 只有橫向版面才 include 計算機側欄;以此判斷直向(BottomSheet)/橫向(側欄)兩種呈現
+    private val isLandscape get() = binding.calculatorPanel != null
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCurrencyBinding.inflate(inflater, container, false)
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         binding.currencyList.adapter = adapter
-        binding.currencyList.addItemDecoration(SpacingItemDecoration(requireContext())) // 直向單欄 / 橫向 2 欄均分間距
+        binding.currencyList.addItemDecoration(SpacingItemDecoration(requireContext())) // 匯率恆單欄,給均勻列距
         (binding.currencyList.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false // 切基準不淡出淡入
         defaultListPaddingBottom = binding.currencyList.paddingBottom
-        // 重建後計算機若仍在(旋轉/主題切換),重套清單底部預留,避免下半被蓋住
-        if (childFragmentManager.findFragmentByTag(CalculatorBottomSheetFragment.TAG) != null) {
-            reserveListForSheet()
-        }
+
+        // 橫向側欄接線:隱藏面板自身標題(空間有限),關閉走鍵盤 ▾
+        binding.calculatorPanel?.let { CalculatorBinder.bind(it, viewModel, viewLifecycleOwner, showHeader = false) }
+
         binding.retryButton.setOnClickListener {
             binding.errorView.isVisible = false
             binding.loading.isVisible = true
@@ -51,31 +54,51 @@ class CurrencyFragment : BaseFragment<FragmentCurrencyBinding>() {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.uiState.collect(::render)
+                launch { viewModel.uiState.collect(::render) }
+                launch { viewModel.isCalculatorOpen.collect(::renderCalculator) }
             }
         }
     }
 
-    // 計算機半屏會蓋住下半清單:預留被蓋住的高度,並把選中幣別平滑貼齊到計算機上緣(其餘排在其上),不留可見空白
     private fun openCalculatorFor(currency: Currency) {
+        viewModel.openCalculator()
+        if (!isLandscape) {
+            reserveListForSheet()
+            scrollToCurrency(currency) // 直向:選中卡貼到計算機上緣,清單不被半屏蓋住
+        }
+        // 橫向:側欄在右側不蓋清單,選中卡靠藍底高亮即可,毋須捲動
+    }
+
+    // 依「計算機開關」渲染當前方向的呈現,也負責旋轉/跨方向還原與收掉錯方向的殘留
+    private fun renderCalculator(open: Boolean) {
+        if (isLandscape) {
+            // 橫向:右側恆留空間,未開顯示提示、開啟顯示計算機;清單一律單欄不受影響
+            binding.calculatorPanel?.root?.isVisible = open
+            binding.calculatorHint?.isVisible = !open
+            dismissSheet() // 自直向旋轉過來可能殘留 BottomSheet,橫向不需要
+        } else {
+            if (open) {
+                showSheet()
+                reserveListForSheet()
+            } else {
+                dismissSheet()
+                restoreListPadding()
+            }
+        }
+    }
+
+    private fun showSheet() {
         if (childFragmentManager.findFragmentByTag(CalculatorBottomSheetFragment.TAG) == null) {
             CalculatorBottomSheetFragment().show(childFragmentManager, CalculatorBottomSheetFragment.TAG)
         }
-        reserveListForSheet()
-        val list = binding.currencyList
-        val index = adapter.currentList.indexOfFirst { it.currency == currency }
-        if (index < 0) return
-        list.post {
-            val ctx = context ?: return@post
-            val scroller = object : LinearSmoothScroller(ctx) {
-                override fun getVerticalSnapPreference() = SNAP_TO_END
-            }
-            scroller.targetPosition = index
-            (list.layoutManager as LinearLayoutManager).startSmoothScroll(scroller)
-        }
     }
 
-    // 量計算機上緣在螢幕上的 Y,換算出它蓋住清單的高度,設為底部 padding
+    private fun dismissSheet() {
+        (childFragmentManager.findFragmentByTag(CalculatorBottomSheetFragment.TAG) as? DialogFragment)
+            ?.dismissAllowingStateLoss()
+    }
+
+    // 量計算機上緣在螢幕上的 Y,換算出它蓋住清單的高度,設為底部 padding(配 clipToPadding=false)
     private fun reserveListForSheet() {
         val list = binding.currencyList
         list.post {
@@ -86,11 +109,25 @@ class CurrencyFragment : BaseFragment<FragmentCurrencyBinding>() {
         }
     }
 
-    // 計算機收起 → 還原清單底部留白
-    fun onCalculatorDismissed() {
+    // 計算機收起 → 還原清單底部留白並捲回頂
+    private fun restoreListPadding() {
         if (view == null) return
         binding.currencyList.updatePadding(bottom = defaultListPaddingBottom)
         binding.currencyList.smoothScrollToPosition(0)
+    }
+
+    private fun scrollToCurrency(currency: Currency) {
+        val index = adapter.currentList.indexOfFirst { it.currency == currency }
+        if (index < 0) return
+        val list = binding.currencyList
+        list.post {
+            val ctx = context ?: return@post
+            val scroller = object : LinearSmoothScroller(ctx) {
+                override fun getVerticalSnapPreference() = SNAP_TO_END
+            }
+            scroller.targetPosition = index
+            list.layoutManager?.startSmoothScroll(scroller)
+        }
     }
 
     private fun render(state: UiState<List<CurrencyRow>>) {

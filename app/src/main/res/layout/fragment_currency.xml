@@ -29,7 +29,7 @@
             android:overScrollMode="never"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="@integer/list_span_count"
+            app:spanCount="@integer/currency_span_count"
             tools:listitem="@layout/item_currency"
             tools:visibility="visible" />
 
