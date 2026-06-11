@@ -27,6 +27,7 @@
     <string name="flight_status_delayed">延遲</string>
     <string name="flight_status_cancelled">取消</string>
 
+    <string name="currency_title">匯率換算</string>
     <string name="currency_rate">1 %1$s = %2$s</string>
     <string name="currency_base_badge">基準</string>
 </resources>
