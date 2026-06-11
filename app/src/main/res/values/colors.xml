@@ -12,6 +12,7 @@
     <color name="status_warning">#FFE0941E</color>
     <color name="status_negative">#FFE15068</color>
     <color name="status_neutral">#FF8A8F98</color>
+    <color name="skeleton">#FFE7E9ED</color>
 
     <!-- M3 角色補齊(淺色):次要/第三色收斂成藍家族,中性面為零彩度灰,避免吃到預設紫 -->
     <color name="md_secondary">#FF4A5A87</color>

@@ -3,9 +3,9 @@
     <string name="tab_flight">航班</string>
     <string name="tab_currency">匯率</string>
 
-    <string name="state_loading">載入中…</string>
     <string name="state_empty">無資料</string>
-    <string name="state_error">載入失敗:%1$s</string>
+    <string name="state_error_message">載入失敗,請稍後再試</string>
+    <string name="action_retry">重試</string>
 
     <string name="flight_title">即時航班</string>
     <string name="flight_subtitle">高雄國際機場 KHH · 即時動態</string>

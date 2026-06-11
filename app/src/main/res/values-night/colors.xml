@@ -8,6 +8,7 @@
     <color name="status_warning">#FFF2B43E</color>
     <color name="status_negative">#FFF26D82</color>
     <color name="status_neutral">#FFAAB0BA</color>
+    <color name="skeleton">#FF2A2F38</color>
 
     <!-- M3 角色補齊(深色):藍家族 + 零彩度深灰中性面 -->
     <color name="md_secondary">#FFB4C5EA</color>
