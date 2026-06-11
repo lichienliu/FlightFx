@@ -9,3 +9,7 @@ annotation class FlightRetrofit
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class CurrencyRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CurrencyClient
