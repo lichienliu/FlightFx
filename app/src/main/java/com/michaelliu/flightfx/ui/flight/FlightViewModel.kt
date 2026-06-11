@@ -33,15 +33,19 @@ class FlightViewModel @Inject constructor(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
+    private val _lastUpdated = MutableStateFlow(0L)
+    val lastUpdated: StateFlow<Long> = _lastUpdated.asStateFlow()
+
     val uiState: StateFlow<UiState<List<Flight>>> =
         merge(
             tickerFlow(),
             refreshTrigger.onEach { _isRefreshing.value = true },
         )
             .map {
-                val state = repository.getFlights(FlightCategory.DEFAULT).toUiState()
+                val result = repository.getFlights(FlightCategory.DEFAULT)
                 _isRefreshing.value = false // 抓取結束就收圈,與資料有沒有變無關
-                state
+                if (result is AppResult.Success) _lastUpdated.value = System.currentTimeMillis()
+                result.toUiState()
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), UiState.Loading)
 
@@ -58,7 +62,7 @@ class FlightViewModel @Inject constructor(
 
     private companion object {
         const val POLL_INTERVAL_MS = 10_000L
-        const val STOP_TIMEOUT_MS = 5_000L // 無人收集後保留上游的緩衝
+        const val STOP_TIMEOUT_MS = 5_000L // 無人收集 5 秒後停止上游
     }
 }
 
