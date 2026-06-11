@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,9 +15,11 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.michaelliu.flightfx.databinding.FragmentCurrencyBinding
 import com.michaelliu.flightfx.domain.model.Currency
+import com.michaelliu.flightfx.ui.MainViewModel
 import com.michaelliu.flightfx.ui.common.BaseFragment
 import com.michaelliu.flightfx.ui.common.SpacingItemDecoration
 import com.michaelliu.flightfx.ui.common.UiState
+import com.michaelliu.flightfx.ui.common.iconRes
 import com.michaelliu.flightfx.ui.common.messageRes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,6 +28,7 @@ import kotlinx.coroutines.launch
 class CurrencyFragment : BaseFragment<FragmentCurrencyBinding>() {
 
     private val viewModel: CurrencyViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val adapter = CurrencyAdapter { currency ->
         viewModel.selectBase(currency)
         openCalculatorFor(currency)
@@ -56,6 +60,8 @@ class CurrencyFragment : BaseFragment<FragmentCurrencyBinding>() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch { viewModel.uiState.collect(::render) }
                 launch { viewModel.isCalculatorOpen.collect(::renderCalculator) }
+                // 離線藏重試鈕:連線恢復會自動重試,離線按了也只會再失敗
+                launch { mainViewModel.isOnline.collect { binding.retryButton.isVisible = it } }
             }
         }
     }
@@ -135,7 +141,10 @@ class CurrencyFragment : BaseFragment<FragmentCurrencyBinding>() {
         binding.currencyList.isVisible = state is UiState.Content
         binding.emptyView.isVisible = state is UiState.Empty
         binding.errorView.isVisible = state is UiState.Error
-        if (state is UiState.Error) binding.errorMessage.setText(state.error.messageRes())
+        if (state is UiState.Error) {
+            binding.errorMessage.setText(state.error.messageRes())
+            binding.errorIcon.setImageResource(state.error.iconRes())
+        }
         if (state is UiState.Content) adapter.submitList(state.data)
     }
 
