@@ -1,11 +1,15 @@
 package com.michaelliu.flightfx.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigationrail.NavigationRailView
 import com.michaelliu.flightfx.R
@@ -14,9 +18,12 @@ import com.michaelliu.flightfx.ui.common.BaseActivity
 import com.michaelliu.flightfx.ui.currency.CurrencyFragment
 import com.michaelliu.flightfx.ui.flight.FlightFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun inflateBinding() = ActivityMainBinding.inflate(layoutInflater)
 
@@ -36,6 +43,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             showFragment(if (item.itemId == R.id.nav_currency) TAG_CURRENCY else TAG_FLIGHT)
             true
         }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // 離線橫幅兩分頁共用;content_area 開 animateLayoutChanges,顯隱時內容平滑推移
+                viewModel.isOnline.collect { binding.offlineBanner.isVisible = !it }
+            }
+        }
     }
 
     // 覆寫 BaseActivity 預設 inset:依方向把系統列分給導覽列與內容,避免雙重留白
@@ -49,10 +62,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             if (binding.navBar is NavigationRailView) {
                 // 橫向:rail 吃 左+上+下,內容吃 上+右+下
                 binding.navBar.updatePadding(left = bars.left, top = bars.top, bottom = bars.bottom)
-                binding.navHostContainer.updatePadding(top = bars.top, right = bars.right, bottom = bars.bottom)
+                binding.contentArea.updatePadding(top = bars.top, right = bars.right, bottom = bars.bottom)
             } else {
                 // 直向:內容吃上、BottomNav 吃下
-                binding.navHostContainer.updatePadding(top = bars.top)
+                binding.contentArea.updatePadding(top = bars.top)
                 binding.navBar.updatePadding(bottom = bars.bottom)
             }
             WindowInsetsCompat.CONSUMED
