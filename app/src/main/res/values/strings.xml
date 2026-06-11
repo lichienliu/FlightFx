@@ -6,5 +6,18 @@
     <string name="state_loading">載入中…</string>
     <string name="state_empty">無資料</string>
     <string name="state_error">載入失敗:%1$s</string>
-    <string name="flight_count">共 %1$d 筆</string>
+
+    <string name="flight_title">即時航班</string>
+    <string name="flight_subtitle">高雄國際機場 KHH · 即時動態</string>
+    <string name="flight_route_arrival">KHH 高雄 ← %1$s</string>
+    <string name="flight_route_departure">KHH 高雄 → %1$s</string>
+    <string name="flight_changed_time">改 %1$s</string>
+    <string name="flight_gate">登機門 %1$s</string>
+    <string name="flight_plane">機型 %1$s</string>
+    <string name="flight_status_departed">離站</string>
+    <string name="flight_status_arrived">抵達</string>
+    <string name="flight_status_ontime">準時</string>
+    <string name="flight_status_boarding">登機</string>
+    <string name="flight_status_delayed">延遲</string>
+    <string name="flight_status_cancelled">取消</string>
 </resources>
