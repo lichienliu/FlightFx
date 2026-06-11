@@ -6,6 +6,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
+import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigationrail.NavigationRailView
 import com.michaelliu.flightfx.R
 import com.michaelliu.flightfx.databinding.ActivityMainBinding
 import com.michaelliu.flightfx.ui.common.BaseActivity
@@ -29,18 +31,30 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 setMaxLifecycle(currency, Lifecycle.State.STARTED)
             }
         }
-        binding.bottomNav.setOnItemSelectedListener { item ->
+        // 兩 variant 同 ID 不同型別 → ViewBinding 退型成 View,監聽器處 cast 回共同父型 NavigationBarView
+        (binding.navBar as NavigationBarView).setOnItemSelectedListener { item ->
             showFragment(if (item.itemId == R.id.nav_currency) TAG_CURRENCY else TAG_FLIGHT)
             true
         }
     }
 
-    // 覆寫 BaseActivity 預設 inset:狀態列 padding 給內容、導覽列 padding 給 BottomNav(底部不留白)
+    // 覆寫 BaseActivity 預設 inset:依方向把系統列分給導覽列與內容,避免雙重留白
+    // 直向 navBar 在底、橫向 navBar 是左側 rail,吃的邊不同,用型別分流
     private fun applyWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            binding.navHostContainer.updatePadding(top = bars.top)
-            binding.bottomNav.updatePadding(bottom = bars.bottom)
+            // 含 displayCutout:橫向時前鏡頭挖孔在側邊,內容/rail 不可壓在其下
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+            )
+            if (binding.navBar is NavigationRailView) {
+                // 橫向:rail 吃 左+上+下,內容吃 上+右+下
+                binding.navBar.updatePadding(left = bars.left, top = bars.top, bottom = bars.bottom)
+                binding.navHostContainer.updatePadding(top = bars.top, right = bars.right, bottom = bars.bottom)
+            } else {
+                // 直向:內容吃上、BottomNav 吃下
+                binding.navHostContainer.updatePadding(top = bars.top)
+                binding.navBar.updatePadding(bottom = bars.bottom)
+            }
             WindowInsetsCompat.CONSUMED
         }
         ViewCompat.requestApplyInsets(binding.root)
