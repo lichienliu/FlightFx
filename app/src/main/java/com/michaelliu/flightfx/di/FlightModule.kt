@@ -1,7 +1,5 @@
 package com.michaelliu.flightfx.di
 
-import com.michaelliu.flightfx.data.remote.FlightRemoteDataSource
-import com.michaelliu.flightfx.data.remote.RealFlightRemoteDataSource
 import com.michaelliu.flightfx.data.remote.api.FlightApi
 import com.michaelliu.flightfx.data.repository.FlightRepositoryImpl
 import com.michaelliu.flightfx.domain.repository.FlightRepository
@@ -16,10 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class FlightModule {
-
-    @Binds
-    @Singleton
-    abstract fun bindFlightRemoteDataSource(impl: RealFlightRemoteDataSource): FlightRemoteDataSource
 
     @Binds
     @Singleton

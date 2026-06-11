@@ -36,6 +36,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("boolean", "USE_MOCK", "true")
+        }
         release {
             optimization {
                 enable = false
