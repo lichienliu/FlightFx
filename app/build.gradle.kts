@@ -79,4 +79,6 @@ dependencies {
     implementation(libs.coil.network.okhttp)
     implementation(libs.facebook.shimmer)
     implementation(libs.androidx.swiperefreshlayout)
+
+    implementation(libs.keval)
 }
