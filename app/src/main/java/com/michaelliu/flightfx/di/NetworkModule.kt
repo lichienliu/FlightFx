@@ -38,6 +38,7 @@ object NetworkModule {
             } else {
                 HttpLoggingInterceptor.Level.NONE
             }
+            redactHeader("apikey") // log 把 apikey 值印成 ██
         }
         return OkHttpClient.Builder()
             .addInterceptor(logging)
@@ -45,6 +46,19 @@ object NetworkModule {
             .readTimeout(15, TimeUnit.SECONDS)
             .build()
     }
+
+    @Provides
+    @Singleton
+    @CurrencyClient
+    fun provideCurrencyClient(base: OkHttpClient): OkHttpClient =
+        base.newBuilder()
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .header("apikey", BuildConfig.FREECURRENCY_API_KEY)
+                    .build()
+                chain.proceed(request)
+            }
+            .build()
 
     @Provides
     @Singleton
@@ -67,7 +81,7 @@ object NetworkModule {
     @Singleton
     @CurrencyRetrofit
     fun provideCurrencyRetrofit(
-        client: OkHttpClient,
+        @CurrencyClient client: OkHttpClient,
         converterFactory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(CURRENCY_BASE_URL)
