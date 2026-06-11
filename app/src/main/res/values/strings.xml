@@ -2,4 +2,28 @@
     <string name="app_name">FlightFX</string>
     <string name="tab_flight">航班</string>
     <string name="tab_currency">匯率</string>
+
+    <string name="state_empty">無資料</string>
+    <string name="state_error_message">載入失敗,請稍後再試</string>
+    <string name="error_network">請檢查網路連線</string>
+    <string name="error_server">伺服器忙碌中,請稍後再試</string>
+    <string name="error_parse">資料異常,請稍後再試</string>
+    <string name="error_generic">載入失敗,請稍後再試</string>
+    <string name="action_retry">重試</string>
+
+    <string name="flight_title">即時航班</string>
+    <string name="flight_subtitle">高雄國際機場 KHH · 即時動態</string>
+    <string name="flight_last_updated">最後更新 · %1$s</string>
+    <string name="flight_poll_interval">每 10 秒更新</string>
+    <string name="flight_route_arrival">KHH 高雄 ← %1$s</string>
+    <string name="flight_route_departure">KHH 高雄 → %1$s</string>
+    <string name="flight_changed_time">改 %1$s</string>
+    <string name="flight_gate">登機門 %1$s</string>
+    <string name="flight_plane">機型 %1$s</string>
+    <string name="flight_status_departed">離站</string>
+    <string name="flight_status_arrived">抵達</string>
+    <string name="flight_status_ontime">準時</string>
+    <string name="flight_status_boarding">登機</string>
+    <string name="flight_status_delayed">延遲</string>
+    <string name="flight_status_cancelled">取消</string>
 </resources>
