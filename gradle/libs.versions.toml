@@ -17,6 +17,7 @@ swiperefresh = "1.2.0"
 kotlinxSerialization = "1.11.0"
 retrofit = "3.0.0"
 okhttp = "5.4.0"
+keval = "2.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,7 @@ coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 facebook-shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefresh" }
+keval = { group = "com.notkamui.libs", name = "keval", version.ref = "keval" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
