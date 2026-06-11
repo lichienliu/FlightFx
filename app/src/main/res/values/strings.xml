@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">flightfx</string>
+    <string name="app_name">FlightFX</string>
+    <string name="tab_flight">航班</string>
+    <string name="tab_currency">匯率</string>
 </resources>
