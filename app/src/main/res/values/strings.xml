@@ -30,6 +30,7 @@
     <string name="currency_title">匯率換算</string>
     <string name="currency_rate">1 %1$s = %2$s</string>
     <string name="currency_base_badge">基準</string>
+    <string name="currency_calc_hint">點選幣別開啟計算機</string>
 
     <string name="calculator_currency_label">%1$s %2$s</string>
     <string name="calculator_subtitle">輸入金額 · 即時換算上方幣別</string>

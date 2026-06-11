@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 航班清單欄數:直向單欄,橫向(values-land)覆寫為 2 欄網格 -->
+    <integer name="list_span_count">1</integer>
+    <!-- 匯率清單欄數:恆單欄(橫向右側要留給計算機,不做網格) -->
+    <integer name="currency_span_count">1</integer>
+</resources>

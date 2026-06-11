@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 計算機面板尺寸(直向值;橫向螢幕矮,values-land 全部調小以騰出鍵盤高度) -->
+    <dimen name="calc_pad_top">8dp</dimen>
+    <dimen name="calc_pad_bottom">16dp</dimen>
+    <dimen name="calc_section_gap">12dp</dimen>
+    <dimen name="calc_display_min_height">56dp</dimen>
+    <dimen name="calc_display_text_max">40sp</dimen>
+    <dimen name="calc_key_margin">4dp</dimen>
+    <dimen name="calc_key_text_size">24sp</dimen>
+</resources>
