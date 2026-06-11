@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.michaelliu.flightfx.databinding.FragmentCurrencyBinding
 import com.michaelliu.flightfx.domain.model.Currency
 import com.michaelliu.flightfx.ui.common.BaseFragment
+import com.michaelliu.flightfx.ui.common.SpacingItemDecoration
 import com.michaelliu.flightfx.ui.common.UiState
 import com.michaelliu.flightfx.ui.common.messageRes
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +37,7 @@ class CurrencyFragment : BaseFragment<FragmentCurrencyBinding>() {
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         binding.currencyList.adapter = adapter
+        binding.currencyList.addItemDecoration(SpacingItemDecoration(requireContext())) // 直向單欄 / 橫向 2 欄均分間距
         (binding.currencyList.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false // 切基準不淡出淡入
         defaultListPaddingBottom = binding.currencyList.paddingBottom
         // 重建後計算機若仍在(旋轉/主題切換),重套清單底部預留,避免下半被蓋住
