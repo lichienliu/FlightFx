@@ -50,4 +50,23 @@
             android:layout_weight="1" />
     </LinearLayout>
 
+    <!-- 假資料浮水印:USE_MOCK 才顯示(MainActivity 控制)。橫向錨在 rail 底部空白,
+         不像直向放內容右上(那裡是「每 10 秒更新」的位置,會疊字) -->
+    <TextView
+        android:id="@+id/mock_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_mock_badge"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:text="@string/mock_badge"
+        android:textAppearance="?attr/textAppearanceLabelSmall"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/nav_bar"
+        app:layout_constraintEnd_toEndOf="@id/nav_bar"
+        app:layout_constraintStart_toStartOf="@id/nav_bar"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

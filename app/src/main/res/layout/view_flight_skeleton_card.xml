@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 單張骨架卡:鏡像 item_flight 的版型(logo+航司兩行+狀態 / 大字時間 / 路線 / chip 列) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_skeleton_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_skeleton_circle" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="120dp"
+                android:layout_height="14dp"
+                android:background="@drawable/bg_skeleton" />
+
+            <View
+                android:layout_width="64dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_skeleton" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="44dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_skeleton" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="92dp"
+            android:layout_height="24dp"
+            android:background="@drawable/bg_skeleton" />
+
+        <View
+            android:layout_width="56dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_skeleton" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="168dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_skeleton" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="84dp"
+            android:layout_height="22dp"
+            android:background="@drawable/bg_skeleton" />
+
+        <View
+            android:layout_width="72dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bg_skeleton" />
+    </LinearLayout>
+</LinearLayout>

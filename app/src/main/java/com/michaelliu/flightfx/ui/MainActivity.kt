@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigationrail.NavigationRailView
+import com.michaelliu.flightfx.BuildConfig
 import com.michaelliu.flightfx.R
 import com.michaelliu.flightfx.databinding.ActivityMainBinding
 import com.michaelliu.flightfx.ui.common.BaseActivity
@@ -29,6 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         applyWindowInsets()
+        binding.mockBadge.isVisible = BuildConfig.USE_MOCK // 示範資料浮水印,真資料/release 不顯示
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 val currency = CurrencyFragment()

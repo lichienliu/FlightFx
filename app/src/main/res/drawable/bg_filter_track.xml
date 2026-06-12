@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 類別篩選的軌道底:整組一條灰膠囊,選中段的藍膠囊疊在上面 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="?attr/colorSurfaceContainerHighest" />
+    <corners android:radius="18dp" />
+</shape>
