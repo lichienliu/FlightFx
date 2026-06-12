@@ -25,7 +25,7 @@ android {
         minSdk = 28
         targetSdk = 37
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         buildConfigField("String", "FREECURRENCY_API_KEY", "\"$freecurrencyApiKey\"")
         buildConfigField("boolean", "USE_MOCK", "false")
