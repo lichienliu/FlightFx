@@ -110,6 +110,7 @@ class FlightFragment : BaseFragment<FragmentFlightBinding>() {
         if (millis <= 0L) return
         val time = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).format(timeFormatter)
         binding.lastUpdated.text = getString(R.string.flight_last_updated, time)
+        binding.liveDot.isVisible = true // 綠點與時間文字一起現身,不在文字之前先亮
     }
 
     override fun onDestroyView() {
