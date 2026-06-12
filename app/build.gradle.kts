@@ -7,11 +7,12 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
-val freecurrencyApiKey: String = Properties().run {
+// API key 與 release 簽章皆放 local.properties(不進 git),這裡統一載入
+val localProps = Properties().apply {
     val f = rootProject.file("local.properties")
     if (f.exists()) f.inputStream().use { load(it) }
-    getProperty("FREECURRENCY_API_KEY", "")
 }
+val freecurrencyApiKey: String = localProps.getProperty("FREECURRENCY_API_KEY", "")
 
 android {
     namespace = "com.michaelliu.flightfx"
@@ -24,7 +25,7 @@ android {
         minSdk = 28
         targetSdk = 37
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         buildConfigField("String", "FREECURRENCY_API_KEY", "\"$freecurrencyApiKey\"")
         buildConfigField("boolean", "USE_MOCK", "false")
@@ -35,14 +36,28 @@ android {
         buildConfig = true
     }
 
+    // 簽章設定沒填時跳過(create 都不做),其他機器 clone 下來仍可建 debug
+    val releaseStoreFile = localProps.getProperty("RELEASE_STORE_FILE", "")
+    signingConfigs {
+        if (releaseStoreFile.isNotEmpty()) {
+            create("release") {
+                storeFile = file(releaseStoreFile)
+                storePassword = localProps.getProperty("RELEASE_STORE_PASSWORD", "")
+                keyAlias = localProps.getProperty("RELEASE_KEY_ALIAS", "")
+                keyPassword = localProps.getProperty("RELEASE_KEY_PASSWORD", "")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField("boolean", "USE_MOCK", "true")
         }
         release {
-            optimization {
-                enable = false
-            }
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
     compileOptions {
