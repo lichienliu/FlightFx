@@ -34,4 +34,24 @@
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@color/brand_blue</item>
     </style>
+
+    <!-- 航班類別篩選:灰軌道 + 選中藍膠囊(無描邊),直橫共用 -->
+    <style name="Widget.Flightfx.FilterGroup" parent="">
+        <item name="android:background">@drawable/bg_filter_track</item>
+        <item name="singleSelection">true</item>
+        <item name="selectionRequired">true</item>
+    </style>
+
+    <style name="Widget.Flightfx.FilterButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
+        <item name="android:textColor">@color/filter_segment_text</item>
+        <item name="backgroundTint">@color/filter_segment_bg</item>
+        <item name="cornerRadius">18dp</item>
+    </style>
 </resources>

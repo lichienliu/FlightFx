@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.michaelliu.flightfx.R
 import com.michaelliu.flightfx.databinding.FragmentFlightBinding
 import com.michaelliu.flightfx.domain.model.Flight
+import com.michaelliu.flightfx.domain.model.FlightCategory
 import com.michaelliu.flightfx.ui.MainViewModel
 import com.michaelliu.flightfx.ui.common.BaseFragment
 import com.michaelliu.flightfx.ui.common.SpacingItemDecoration
@@ -37,7 +38,18 @@ class FlightFragment : BaseFragment<FragmentFlightBinding>() {
 
     override fun onViewReady(savedInstanceState: Bundle?) {
         binding.flightList.adapter = adapter
+        // 關掉預設增刪動畫:換類別時清單藏在 shimmer 後面,RecyclerView 不跑 layout,
+        // 等轉回可見才補播欠著的「舊卡片淡出」= 閃舊資料;卡片更新提示走自製 pulse,不受影響
+        binding.flightList.itemAnimator = null
         binding.flightList.addItemDecoration(SpacingItemDecoration(requireContext())) // 直向單欄 / 橫向 2 欄均分間距
+        // 還原篩選選中態要在掛 listener 之前,程式化 check 才不會觸發重抓
+        renderCategory(viewModel.category.value)
+        binding.lineToggle.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) onFilterChecked()
+        }
+        binding.ioToggle.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) onFilterChecked()
+        }
         binding.swipeRefresh.setOnRefreshListener { viewModel.refresh() }
         binding.retryButton.setOnClickListener {
             binding.errorView.isVisible = false
@@ -56,6 +68,24 @@ class FlightFragment : BaseFragment<FragmentFlightBinding>() {
         }
     }
 
+    private fun renderCategory(category: FlightCategory) {
+        binding.lineToggle.check(
+            if (category.isInternational) R.id.filter_international else R.id.filter_domestic
+        )
+        binding.ioToggle.check(
+            if (category.isDeparture) R.id.filter_departure else R.id.filter_arrival
+        )
+    }
+
+    private fun onFilterChecked() {
+        viewModel.selectCategory(
+            FlightCategory.of(
+                isInternational = binding.lineToggle.checkedButtonId == R.id.filter_international,
+                isDeparture = binding.ioToggle.checkedButtonId == R.id.filter_departure,
+            )
+        )
+    }
+
     private fun render(state: UiState<List<Flight>>) {
         binding.shimmer.isVisible = state is UiState.Loading
         binding.swipeRefresh.isVisible = state is UiState.Content
@@ -65,7 +95,14 @@ class FlightFragment : BaseFragment<FragmentFlightBinding>() {
             binding.errorMessage.setText(state.error.messageRes())
             binding.errorIcon.setImageResource(state.error.iconRes())
         }
-        if (state is UiState.Loading) binding.shimmer.startShimmer() else binding.shimmer.stopShimmer()
+        if (state is UiState.Loading) {
+            binding.shimmer.startShimmer()
+            // 清掉 adapter 殘留的舊類別清單:submitList 的 diff 是非同步的,
+            // 不清的話新內容到位前會先閃一下舊資料
+            adapter.submitList(null)
+        } else {
+            binding.shimmer.stopShimmer()
+        }
         if (state is UiState.Content) adapter.submitList(state.data)
     }
 

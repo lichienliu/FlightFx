@@ -25,6 +25,59 @@
         android:textAppearance="?attr/textAppearanceBodyMedium"
         android:textColor="?android:attr/textColorSecondary" />
 
+    <!-- 類別篩選:國內|國際 × 抵達|出發 兩組獨立 segmented,對應 API 的 Line × IO 兩參數 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/line_toggle"
+            style="@style/Widget.Flightfx.FilterGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/filter_domestic"
+                style="@style/Widget.Flightfx.FilterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/flight_filter_domestic" />
+
+            <Button
+                android:id="@+id/filter_international"
+                style="@style/Widget.Flightfx.FilterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/flight_filter_international" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/io_toggle"
+            style="@style/Widget.Flightfx.FilterGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp">
+
+            <Button
+                android:id="@+id/filter_arrival"
+                style="@style/Widget.Flightfx.FilterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/flight_filter_arrival" />
+
+            <Button
+                android:id="@+id/filter_departure"
+                style="@style/Widget.Flightfx.FilterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/flight_filter_departure" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

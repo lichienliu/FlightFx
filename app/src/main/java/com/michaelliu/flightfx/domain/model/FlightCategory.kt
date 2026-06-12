@@ -13,5 +13,8 @@ enum class FlightCategory(val isInternational: Boolean, val isDeparture: Boolean
 
     companion object {
         val DEFAULT = DOM_ARR
+
+        fun of(isInternational: Boolean, isDeparture: Boolean): FlightCategory =
+            entries.first { it.isInternational == isInternational && it.isDeparture == isDeparture }
     }
 }
