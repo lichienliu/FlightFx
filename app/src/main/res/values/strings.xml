@@ -14,6 +14,10 @@
 
     <string name="flight_title">即時航班</string>
     <string name="flight_subtitle">高雄國際機場 KHH · 即時動態</string>
+    <string name="flight_filter_domestic">國內</string>
+    <string name="flight_filter_international">國際</string>
+    <string name="flight_filter_arrival">抵達</string>
+    <string name="flight_filter_departure">出發</string>
     <string name="flight_last_updated">最後更新 · %1$s</string>
     <string name="flight_poll_interval">每 10 秒更新</string>
     <string name="flight_route_arrival">KHH 高雄 ← %1$s</string>
