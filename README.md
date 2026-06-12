@@ -22,6 +22,12 @@ Kotlin・MVVM + Clean Architecture・傳統 View(XML + ViewBinding)
 - 深色模式跟隨系統
 - 直向(底部導覽 + BottomSheet 計算機)/ 橫向(NavigationRail + 雙欄網格、master-detail 計算機側欄)兩套版面
 
+## Demo 影片
+
+[![FlightFX Demo](https://img.youtube.com/vi/eY2zBcD5BfA/hqdefault.jpg)](https://youtu.be/eY2zBcD5BfA)
+
+2 分 20 秒操作示範:冷啟動、航班看板與每 10 秒自動更新、四類切換、計算機即時連動與四則運算、離線偵測與自動恢復、橫向佈局、深色模式 → https://youtu.be/eY2zBcD5BfA
+
 ## 截圖
 
 > 截圖為內建「示範資料」模式(右上角浮水印),涵蓋各種航班狀態以利展示;實際執行時串接機場即時 API。
