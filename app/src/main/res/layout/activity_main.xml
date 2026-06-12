@@ -32,11 +32,32 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_container"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- 假資料浮水印:USE_MOCK 才顯示(MainActivity 控制),一眼區分示範/真資料 -->
+            <TextView
+                android:id="@+id/mock_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="12dp"
+                android:background="@drawable/bg_mock_badge"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="@string/mock_badge"
+                android:textAppearance="?attr/textAppearanceLabelSmall"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </FrameLayout>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
